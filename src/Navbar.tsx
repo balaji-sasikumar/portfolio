@@ -12,7 +12,7 @@ import {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navItems = [
     "About",
     "Experience",
@@ -22,7 +22,7 @@ const Navbar = () => {
     "Awards",
   ];
 
-  const toggleMenu = (event) => {
+  const toggleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 

@@ -13,6 +13,7 @@ import {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [activeSection, setActiveSection] = useState<string>(""); // Track active section
   const navItems = [
     "About",
     "Experience",
@@ -28,6 +29,12 @@ const Navbar = () => {
 
   const closeMenu = () => {
     setAnchorEl(null);
+  };
+
+  // Handle active section change
+  const handleItemClick = (item: string) => {
+    setActiveSection(item);
+    setIsOpen(false); // Close the menu when item is selected
   };
 
   return (
@@ -64,7 +71,16 @@ const Navbar = () => {
             }}
           >
             {navItems.map((item, index) => (
-              <MenuItem key={index} onClick={closeMenu}>
+              <MenuItem
+                key={index}
+                onClick={() => handleItemClick(item)} // Handle item click
+                sx={{
+                  backgroundColor: activeSection === item ? "#4f46e5" : "", // Active item color
+                  "&:hover": {
+                    backgroundColor: "#4f46e5", // Hover color
+                  },
+                }}
+              >
                 <a
                   href={`#${item.toLowerCase()}`}
                   style={{ color: "white", textDecoration: "none" }}
@@ -82,8 +98,14 @@ const Navbar = () => {
                 key={index}
                 href={`#${item.toLowerCase()}`}
                 className="text-lg hover:underline mx-6"
-                onClick={() => setIsOpen(false)}
-                style={{ color: "white", textDecoration: "none" }}
+                onClick={() => handleItemClick(item)} // Handle item click
+                style={{
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: activeSection === item ? "bold" : "normal", // Active item style
+                  borderBottom:
+                    activeSection === item ? "2px solid white" : "none", // Active item underline
+                }}
               >
                 {item}
               </a>
